@@ -9,7 +9,7 @@ import { LightMode, DarkMode, Search } from "@mui/icons-material";
 import debounce from "lodash/debounce";
 
 const instances = {
-  production: [{ name: "DHIS2", url: "#", github: "#", description: "Live on his.msf-waca.org" }],
+  production: [{ name: "DHIS2", url: "https://his.msf-waca.org/", github: "https://github.com/msfwaca", description: "Live on his.msf-waca.org" }],
   testing: [
     { name: "Development Server", description: "This is for DHIS2 developers", username: "Admin", password: "Admin123", url: "#", github: "#" },
     { name: "Latest Pre-release Training instance", description: "An instance to facilitate Trainings on DHSI2", username: "Admin", password: "Admin123", url: "#", github: "#" },
@@ -95,8 +95,8 @@ export default function ProductPortal() {
                   <Typography variant="h6">{instance.name}</Typography>
                   <Typography variant="body2" color="text.secondary">{instance.description}</Typography>
                   <Box mt={2}>
-                    <Button variant="contained" color="primary" href={instance.url}>{t('visit')}</Button>
-                    <Button variant="outlined" color="secondary" href={instance.github} sx={{ ml: 2 }}>{t('github')}</Button>
+                    <Button variant="contained" color="primary" href={instance.url} target="_blank">{t('visit')}</Button>
+                    <Button variant="outlined" color="secondary" href={instance.github} target="_blank" sx={{ ml: 2 }}>{t('github')}</Button>
                   </Box>
                 </CardContent>
               </Card>
@@ -115,8 +115,8 @@ export default function ProductPortal() {
                   <Typography variant="body2">{t('username')}: <strong>{instance.username}</strong></Typography>
                   <Typography variant="body2">{t('password')}: <strong>{instance.password}</strong></Typography>
                   <Box mt={2}>
-                    <Button variant="contained" color="primary" href={instance.url}>{t('visit')}</Button>
-                    <Button variant="outlined" color="secondary" href={instance.github} sx={{ ml: 2 }}>{t('github')}</Button>
+                    <Button variant="contained" color="primary" href={instance.url} target="_blank">{t('visit')}</Button>
+                    <Button variant="outlined" color="secondary" href={instance.github} target="_blank" sx={{ ml: 2 }}>{t('github')}</Button>
                   </Box>
                 </CardContent>
               </Card>
@@ -147,8 +147,8 @@ export default function ProductPortal() {
                 <TableRow key={index}>
                   <TableCell>{material.product}</TableCell>
                   <TableCell>{material.description}</TableCell>
-                  <TableCell><Button variant="outlined">{material.jobAid}</Button></TableCell>
-                  <TableCell><Button variant="contained" color="primary">{material.video}</Button></TableCell>
+                  <TableCell><Button variant="outlined" target="_blank">{material.jobAid}</Button></TableCell>
+                  <TableCell><Button variant="contained" color="primary" target="_blank">{material.video}</Button></TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -157,9 +157,7 @@ export default function ProductPortal() {
       </Container>
 
       <Box sx={{ backgroundColor: darkMode ? "#424242" : "#1976d2", color: "white", padding: 2, textAlign: "center", marginTop: 4 }}>
-        <Typography variant="body2">© 2025 MSF WaCA. All rights reserved.</Typography>
-        <Link href="#" color="inherit" underline="none" sx={{ mx: 2 }}>Privacy Policy</Link>
-        <Link href="#" color="inherit" underline="none" sx={{ mx: 2 }}>Terms of Service</Link>
+        <Typography variant="body2">© 2025 Brought to you by HIS.</Typography>
         <Link href="#" color="inherit" underline="none" sx={{ mx: 2 }}>Contact Us</Link>
       </Box>
     </Box>
