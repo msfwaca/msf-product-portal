@@ -9,3 +9,4 @@ This template provides a minimal setup to get React working in Vite with HMR and
 
 A **centralized dashboard** for managing and accessing **HIS (Health Information System) instances** used in **MSF WaCA**.  
 This portal provides quick access to **production and testing environments**, along with **training materials** for users.
+![alt text](image.png)
