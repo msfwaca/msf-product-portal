@@ -1,0 +1,19 @@
+{
+    "title": "Portail des produits MSF WaCA",
+    "production": "Instances de production",
+    "testing": "Instances de test",
+    "training": "Matériaux de formation et documentation utilisateur",
+    "searchPlaceholder": "Rechercher...",
+    "visit": "Visiter",
+    "github": "GitHub",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "totContent": "Contenu technique TOT",
+    "endUserContent": "Contenu utilisateur final",
+    "productVersion": "PRODUIT HIS & VERSION",
+    "jobAidDescription": "DESCRIPTION DE L'AIDE À L'EMPLOI",
+    "jobAid": "AIDE À L'EMPLOI",
+    "video": "VIDÉO",
+    "intro": "Introduction à DHIS2",
+    "creatingReports": "Création de rapports dans DHIS2"
+  }
