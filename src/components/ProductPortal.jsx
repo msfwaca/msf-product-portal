@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import { 
   Container, Grid, Card, CardContent, Typography, Button, TextField, Box, 
@@ -6,6 +6,7 @@ import {
   TableContainer, TableHead, TableRow, Paper, MenuItem, Select 
 } from "@mui/material";
 import { LightMode, DarkMode, Search } from "@mui/icons-material";
+import debounce from "lodash/debounce";
 
 const instances = {
   production: [{ name: "DHIS2", url: "#", github: "#", description: "Live on his.msf-waca.org" }],
@@ -31,6 +32,10 @@ export default function ProductPortal() {
     setSelectedTab(newValue);
   };
 
+  const handleSearchChange = debounce((event) => {
+    setSearchTerm(event.target.value);
+  }, 300);
+
   const filteredProduction = instances.production.filter(instance =>
     instance.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -52,7 +57,7 @@ export default function ProductPortal() {
           <TextField
             variant="outlined"
             placeholder={t('searchPlaceholder')}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchChange}
             sx={{ backgroundColor: "white", borderRadius: 1, marginRight: 2 }}
             InputProps={{ endAdornment: <Search /> }}
           />
@@ -81,7 +86,7 @@ export default function ProductPortal() {
           </Typography>
         </Box>
 
-        <Typography textAlign="center" variant="h5" color={darkMode ? "white" : "black"} mt={4} id="production">{t('production')}</Typography>
+        <Typography variant="h5" color={darkMode ? "white" : "black"} mt={4} id="production" textAlign="center">{t('production')}</Typography>
         <Grid container spacing={3} mt={2}>
           {filteredProduction.map((instance, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -99,7 +104,7 @@ export default function ProductPortal() {
           ))}
         </Grid>
 
-        <Typography textAlign="center" variant="h5" color={darkMode ? "white" : "black"} mt={4} id="testing">{t('testing')}</Typography>
+        <Typography variant="h5" color={darkMode ? "white" : "black"} mt={4} id="testing" textAlign="center">{t('testing')}</Typography>
         <Grid container spacing={3} mt={2}>
           {filteredTesting.map((instance, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -119,7 +124,7 @@ export default function ProductPortal() {
           ))}
         </Grid>
 
-        <Typography textAlign="center" variant="h5" color={darkMode ? "white" : "black"} mt={4} id="training">
+        <Typography variant="h5" color={darkMode ? "white" : "black"} mt={4} id="training" textAlign="center">
           {t('training')}
         </Typography>
         <Tabs value={selectedTab} onChange={handleTabChange} centered>
@@ -150,6 +155,13 @@ export default function ProductPortal() {
           </Table>
         </TableContainer>
       </Container>
+
+      <Box sx={{ backgroundColor: darkMode ? "#424242" : "#1976d2", color: "white", padding: 2, textAlign: "center", marginTop: 4 }}>
+        <Typography variant="body2">© 2025 MSF WaCA. All rights reserved.</Typography>
+        <Link href="#" color="inherit" underline="none" sx={{ mx: 2 }}>Privacy Policy</Link>
+        <Link href="#" color="inherit" underline="none" sx={{ mx: 2 }}>Terms of Service</Link>
+        <Link href="#" color="inherit" underline="none" sx={{ mx: 2 }}>Contact Us</Link>
+      </Box>
     </Box>
   );
 }
