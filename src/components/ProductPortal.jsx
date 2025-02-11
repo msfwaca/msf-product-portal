@@ -86,7 +86,7 @@ export default function ProductPortal() {
           </Typography>
         </Box>
 
-        <Typography variant="h5" color={darkMode ? "white" : "black"} mt={4} id="production" textAlign="center">{t('production')}</Typography>
+        <Typography variant="h5" fontWeight="bold" color={darkMode ? "white" : "black"} mt={4} id="production" textAlign="center">{t('production')}</Typography>
         <Grid container spacing={3} mt={2}>
           {filteredProduction.map((instance, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -104,7 +104,7 @@ export default function ProductPortal() {
           ))}
         </Grid>
 
-        <Typography variant="h5" color={darkMode ? "white" : "black"} mt={4} id="testing" textAlign="center">{t('testing')}</Typography>
+        <Typography variant="h5" fontWeight="bold" color={darkMode ? "white" : "black"} mt={4} id="testing" textAlign="center">{t('testing')}</Typography>
         <Grid container spacing={3} mt={2}>
           {filteredTesting.map((instance, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -124,7 +124,7 @@ export default function ProductPortal() {
           ))}
         </Grid>
 
-        <Typography variant="h5" color={darkMode ? "white" : "black"} mt={4} id="training" textAlign="center">
+        <Typography variant="h5" fontWeight="bold" color={darkMode ? "white" : "black"} mt={4} id="training" textAlign="center">
           {t('training')}
         </Typography>
         <Tabs value={selectedTab} onChange={handleTabChange} centered>
