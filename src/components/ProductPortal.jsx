@@ -1,14 +1,14 @@
 import React, { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { 
   Container, Grid, Card, CardContent, Typography, Button, TextField, Box, 
   AppBar, Toolbar, IconButton, Link, Tabs, Tab, Table, TableBody, TableCell, 
-  TableContainer, TableHead, TableRow, Paper 
+  TableContainer, TableHead, TableRow, Paper, MenuItem, Select 
 } from "@mui/material";
 import { LightMode, DarkMode, Search } from "@mui/icons-material";
 
 const instances = {
   production: [{ name: "DHIS2", url: "#", github: "#", description: "Live on his.msf-waca.org" }],
-
   testing: [
     { name: "Development Server", description: "This is for DHIS2 developers", username: "Admin", password: "Admin123", url: "#", github: "#" },
     { name: "Latest Pre-release Training instance", description: "An instance to facilitate Trainings on DHSI2", username: "Admin", password: "Admin123", url: "#", github: "#" },
@@ -22,6 +22,7 @@ const trainingMaterials = {
 };
 
 export default function ProductPortal() {
+  const { t, i18n } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [darkMode, setDarkMode] = useState(true);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -44,17 +45,25 @@ export default function ProductPortal() {
     <Box sx={{ backgroundColor: darkMode ? "#303030" : "#f5f5f5", minHeight: "100vh", padding: 4 }}>
       <AppBar position="static" sx={{ backgroundColor: darkMode ? "#424242" : "#1976d2" }}>
         <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>MSF WaCA Product Portal</Typography>
-          <Link href="#production" color="inherit" underline="none" sx={{ mx: 2 }}>Production</Link>
-          <Link href="#testing" color="inherit" underline="none" sx={{ mx: 2 }}>Testing</Link>
-          <Link href="#training" color="inherit" underline="none" sx={{ mx: 2 }}>Training</Link>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>{t('title')}</Typography>
+          <Link href="#production" color="inherit" underline="none" sx={{ mx: 2 }}>{t('production')}</Link>
+          <Link href="#testing" color="inherit" underline="none" sx={{ mx: 2 }}>{t('testing')}</Link>
+          <Link href="#training" color="inherit" underline="none" sx={{ mx: 2 }}>{t('training')}</Link>
           <TextField
             variant="outlined"
-            placeholder="Search..."
+            placeholder={t('searchPlaceholder')}
             onChange={(e) => setSearchTerm(e.target.value)}
             sx={{ backgroundColor: "white", borderRadius: 1, marginRight: 2 }}
             InputProps={{ endAdornment: <Search /> }}
           />
+          <Select
+            value={i18n.language}
+            onChange={(e) => i18n.changeLanguage(e.target.value)}
+            sx={{ color: "white", marginRight: 2 }}
+          >
+            <MenuItem value="en">EN</MenuItem>
+            <MenuItem value="fr">FR</MenuItem>
+          </Select>
           <IconButton onClick={() => setDarkMode(!darkMode)} color="inherit">
             {darkMode ? <LightMode /> : <DarkMode />}
           </IconButton>
@@ -62,7 +71,7 @@ export default function ProductPortal() {
       </AppBar>
       
       <Container>
-      <Box textAlign="center" mt={4}>
+        <Box textAlign="center" mt={4}>
           <Typography variant="h4" fontWeight="bold" color={darkMode ? "white" : "black"}>
             HIS live, Training & Testing Instances
           </Typography>
@@ -72,7 +81,7 @@ export default function ProductPortal() {
           </Typography>
         </Box>
 
-        <Typography variant="h5" color={darkMode ? "white" : "black"} mt={4} id="production">Production Instances</Typography>
+        <Typography textAlign="center" variant="h5" color={darkMode ? "white" : "black"} mt={4} id="production">{t('production')}</Typography>
         <Grid container spacing={3} mt={2}>
           {filteredProduction.map((instance, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -81,8 +90,8 @@ export default function ProductPortal() {
                   <Typography variant="h6">{instance.name}</Typography>
                   <Typography variant="body2" color="text.secondary">{instance.description}</Typography>
                   <Box mt={2}>
-                    <Button variant="contained" color="primary" href={instance.url}>Visit</Button>
-                    <Button variant="outlined" color="secondary" href={instance.github} sx={{ ml: 2 }}>GitHub</Button>
+                    <Button variant="contained" color="primary" href={instance.url}>{t('visit')}</Button>
+                    <Button variant="outlined" color="secondary" href={instance.github} sx={{ ml: 2 }}>{t('github')}</Button>
                   </Box>
                 </CardContent>
               </Card>
@@ -90,7 +99,7 @@ export default function ProductPortal() {
           ))}
         </Grid>
 
-        <Typography variant="h5" color={darkMode ? "white" : "black"} mt={4} id="testing">Testing Instances</Typography>
+        <Typography textAlign="center" variant="h5" color={darkMode ? "white" : "black"} mt={4} id="testing">{t('testing')}</Typography>
         <Grid container spacing={3} mt={2}>
           {filteredTesting.map((instance, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -98,11 +107,11 @@ export default function ProductPortal() {
                 <CardContent>
                   <Typography variant="h6">{instance.name}</Typography>
                   <Typography variant="body2" color="text.secondary">{instance.description}</Typography>
-                  <Typography variant="body2">Username: <strong>{instance.username}</strong></Typography>
-                  <Typography variant="body2">Password: <strong>{instance.password}</strong></Typography>
+                  <Typography variant="body2">{t('username')}: <strong>{instance.username}</strong></Typography>
+                  <Typography variant="body2">{t('password')}: <strong>{instance.password}</strong></Typography>
                   <Box mt={2}>
-                    <Button variant="contained" color="primary" href={instance.url}>Visit</Button>
-                    <Button variant="outlined" color="secondary" href={instance.github} sx={{ ml: 2 }}>GitHub</Button>
+                    <Button variant="contained" color="primary" href={instance.url}>{t('visit')}</Button>
+                    <Button variant="outlined" color="secondary" href={instance.github} sx={{ ml: 2 }}>{t('github')}</Button>
                   </Box>
                 </CardContent>
               </Card>
@@ -110,22 +119,22 @@ export default function ProductPortal() {
           ))}
         </Grid>
 
-        <Typography variant="h5" color={darkMode ? "white" : "black"} mt={4} id="training">
-          User Training Materials & Documentation
+        <Typography textAlign="center" variant="h5" color={darkMode ? "white" : "black"} mt={4} id="training">
+          {t('training')}
         </Typography>
         <Tabs value={selectedTab} onChange={handleTabChange} centered>
-          <Tab label="TOT Technical Content" />
-          <Tab label="End User Content" />
+          <Tab label={t('totContent')} />
+          <Tab label={t('endUserContent')} />
         </Tabs>
 
         <TableContainer component={Paper} sx={{ mt: 2, backgroundColor: darkMode ? "#424242" : "white" }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell><Typography fontWeight="bold">HIS PRODUCT & VERSION</Typography></TableCell>
-                <TableCell><Typography fontWeight="bold">JOB AID DESCRIPTION</Typography></TableCell>
-                <TableCell><Typography fontWeight="bold">JOB AID</Typography></TableCell>
-                <TableCell><Typography fontWeight="bold">VIDEO</Typography></TableCell>
+                <TableCell><Typography fontWeight="bold">{t('productVersion')}</Typography></TableCell>
+                <TableCell><Typography fontWeight="bold">{t('jobAidDescription')}</Typography></TableCell>
+                <TableCell><Typography fontWeight="bold">{t('jobAid')}</Typography></TableCell>
+                <TableCell><Typography fontWeight="bold">{t('video')}</Typography></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

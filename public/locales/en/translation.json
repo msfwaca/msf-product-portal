@@ -1,0 +1,19 @@
+{
+    "title": "MSF WaCA Product Portal",
+    "production": "Production Instances",
+    "testing": "Testing Instances",
+    "training": "User Training Materials & Documentation",
+    "searchPlaceholder": "Search...",
+    "visit": "Visit",
+    "github": "GitHub",
+    "username": "Username",
+    "password": "Password",
+    "totContent": "TOT Technical Content",
+    "endUserContent": "End User Content",
+    "productVersion": "HIS PRODUCT & VERSION",
+    "jobAidDescription": "JOB AID DESCRIPTION",
+    "jobAid": "JOB AID",
+    "video": "VIDEO",
+    "intro": "Introduction to DHIS2",
+    "creatingReports": "Creating Reports in DHIS2"
+  }
