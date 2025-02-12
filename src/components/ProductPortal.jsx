@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
-import { 
-  Container, Grid, Card, CardContent, Typography, Button, TextField, Box, 
-  AppBar, Toolbar, IconButton, Link, Tabs, Tab, Table, TableBody, TableCell, 
-  TableContainer, TableHead, TableRow, Paper, MenuItem, Select 
+import {
+  Container, Grid, Card, CardContent, Typography, Button, TextField, Box,
+  AppBar, Toolbar, IconButton, Link, Tabs, Tab, Table, TableBody, TableCell,
+  TableContainer, TableHead, TableRow, Paper, MenuItem, Select
 } from "@mui/material";
 import { LightMode, DarkMode, Search } from "@mui/icons-material";
 import debounce from "lodash/debounce";
 
 const instances = {
-  production: [{ name: "DHIS2", url: "https://his.msf-waca.org/", github: "https://github.com/msfwaca", description: "Live on his.msf-waca.org" }],
+  production: [{ name: "DHIS2", url: "https://his.msf-waca.org/", github: "https://github.com/msfwaca/dhis2-prorgam-indicators", description: "Live on his.msf-waca.org" }],
   testing: [
     { name: "Development Server", description: "This is for DHIS2 developers", username: "Admin", password: "Admin123", url: "#", github: "#" },
     { name: "Latest Pre-release Training instance", description: "An instance to facilitate Trainings on DHSI2", username: "Admin", password: "Admin123", url: "#", github: "#" },
@@ -18,8 +18,22 @@ const instances = {
 };
 
 const trainingMaterials = {
-  tot: [{ product: "DHIS2 v2.41", description: "Introduction to DHIS2", jobAid: "Download", video: "Watch" }],
-  endUser: [{ product: "Data Visualization", description: "Creating Reports in DHIS2", jobAid: "Download", video: "Watch" }],
+  tot: [
+    {
+      product: "DHIS2 v2.41",
+      description: "Introduction to DHIS2",
+      jobAid: { label: "Download", url: "https://dhis2.org/overview/version-41/"},
+      video: { label: "Watch", url: "https://youtu.be/2C4RSlcedkU"}
+    }
+  ],
+  endUser: [
+    {
+      product: "Data Visualization",
+      description: "Creating Reports in DHIS2",
+      jobAid: { label: "Download", url: "https://docs.dhis2.org/en/use/user-guides/dhis-core-version-238/analysing-data/data-visualizer.html"},
+      video: { label: "Watch", url: "https://www.youtube.com/watch?v=uHjYpeB9i5E&list=PLo6Seh-066RzR6LP9VFLllKBu5atIR0pZ"}
+    }
+  ],
 };
 
 export default function ProductPortal() {
@@ -74,11 +88,11 @@ export default function ProductPortal() {
           </IconButton>
         </Toolbar>
       </AppBar>
-      
+
       <Container>
         <Box textAlign="center" mt={4}>
           <Typography variant="h4" fontWeight="bold" color={darkMode ? "white" : "black"}>
-            HIS live, Training & Testing Instances
+            HIS Live, Training & Testing Instances
           </Typography>
           <Typography variant="subtitle1" color={darkMode ? "gray" : "black"}>List of all servers</Typography>
           <Typography variant="body1" color={darkMode ? "gray" : "black"} mt={0}>
@@ -147,8 +161,16 @@ export default function ProductPortal() {
                 <TableRow key={index}>
                   <TableCell>{material.product}</TableCell>
                   <TableCell>{material.description}</TableCell>
-                  <TableCell><Button variant="outlined" target="_blank">{material.jobAid}</Button></TableCell>
-                  <TableCell><Button variant="contained" color="primary" target="_blank">{material.video}</Button></TableCell>
+                  <TableCell>
+                    <Button variant="outlined" href={material.jobAid.url} target="_blank">
+                      {material.jobAid.label}
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="contained" color="primary" href={material.video.url} target="_blank">
+                      {material.video.label}
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
