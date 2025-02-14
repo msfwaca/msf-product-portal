@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
-import { 
-  Container, Grid, Card, CardContent, Typography, Button, TextField, Box, 
-  AppBar, Toolbar, IconButton, Link, Tabs, Tab, Table, TableBody, TableCell, 
-  TableContainer, TableHead, TableRow, Paper, MenuItem, Select 
+import {
+  Container, Grid, Card, CardContent, Typography, Button, TextField, Box,
+  AppBar, Toolbar, IconButton, Link, Tabs, Tab, Table, TableBody, TableCell,
+  TableContainer, TableHead, TableRow, Paper, MenuItem, Select
 } from "@mui/material";
 import { LightMode, DarkMode, Search } from "@mui/icons-material";
+import debounce from "lodash/debounce";
 
 const instances = {
-  production: [{ name: "DHIS2", url: "#", github: "#", description: "Live on his.msf-waca.org" }],
+  production: [{ name: "DHIS2", url: "https://his.msf-waca.org/", github: "https://github.com/msfwaca/dhis2-prorgam-indicators", description: "Live on his.msf-waca.org" }],
   testing: [
     { name: "Development Server", description: "This is for DHIS2 developers", username: "Admin", password: "Admin123", url: "#", github: "#" },
     { name: "Latest Pre-release Training instance", description: "An instance to facilitate Trainings on DHSI2", username: "Admin", password: "Admin123", url: "#", github: "#" },
@@ -17,8 +18,22 @@ const instances = {
 };
 
 const trainingMaterials = {
-  tot: [{ product: "DHIS2 v2.41", description: "Introduction to DHIS2", jobAid: "Download", video: "Watch" }],
-  endUser: [{ product: "Data Visualization", description: "Creating Reports in DHIS2", jobAid: "Download", video: "Watch" }],
+  tot: [
+    {
+      product: "DHIS2 v2.41",
+      description: "Introduction to DHIS2",
+      jobAid: { label: "Download", url: "https://dhis2.org/overview/version-41/"},
+      video: { label: "Watch", url: "https://youtu.be/2C4RSlcedkU"}
+    }
+  ],
+  endUser: [
+    {
+      product: "Data Visualization",
+      description: "Creating Reports in DHIS2",
+      jobAid: { label: "Download", url: "https://docs.dhis2.org/en/use/user-guides/dhis-core-version-238/analysing-data/data-visualizer.html"},
+      video: { label: "Watch", url: "https://www.youtube.com/watch?v=uHjYpeB9i5E&list=PLo6Seh-066RzR6LP9VFLllKBu5atIR0pZ"}
+    }
+  ],
 };
 
 export default function ProductPortal() {
@@ -30,6 +45,10 @@ export default function ProductPortal() {
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
+
+  const handleSearchChange = debounce((event) => {
+    setSearchTerm(event.target.value);
+  }, 300);
 
   const filteredProduction = instances.production.filter(instance =>
     instance.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -45,6 +64,9 @@ export default function ProductPortal() {
     <Box sx={{ backgroundColor: darkMode ? "#303030" : "#f5f5f5", minHeight: "100vh", padding: 4 }}>
       <AppBar position="static" sx={{ backgroundColor: darkMode ? "#424242" : "#1976d2" }}>
         <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="logo" sx={{ mr: 0 }}>
+            <img src="https://waca.msf.org/wp-content/uploads/2023/11/logomsfwaca1.png" alt="Logo" style={{ height: 40 }} />
+          </IconButton>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>{t('title')}</Typography>
           <Link href="#production" color="inherit" underline="none" sx={{ mx: 2 }}>{t('production')}</Link>
           <Link href="#testing" color="inherit" underline="none" sx={{ mx: 2 }}>{t('testing')}</Link>
@@ -52,7 +74,7 @@ export default function ProductPortal() {
           <TextField
             variant="outlined"
             placeholder={t('searchPlaceholder')}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchChange}
             sx={{ backgroundColor: "white", borderRadius: 1, marginRight: 2 }}
             InputProps={{ endAdornment: <Search /> }}
           />
@@ -69,11 +91,11 @@ export default function ProductPortal() {
           </IconButton>
         </Toolbar>
       </AppBar>
-      
+
       <Container>
         <Box textAlign="center" mt={4}>
           <Typography variant="h4" fontWeight="bold" color={darkMode ? "white" : "black"}>
-            HIS live, Training & Testing Instances
+            HIS Live, Training & Testing Instances
           </Typography>
           <Typography variant="subtitle1" color={darkMode ? "gray" : "black"}>List of all servers</Typography>
           <Typography variant="body1" color={darkMode ? "gray" : "black"} mt={0}>
@@ -81,7 +103,7 @@ export default function ProductPortal() {
           </Typography>
         </Box>
 
-        <Typography textAlign="center" variant="h5" color={darkMode ? "white" : "black"} mt={4} id="production">{t('production')}</Typography>
+        <Typography variant="h5" fontWeight="bold" color={darkMode ? "white" : "black"} mt={4} id="production" textAlign="center">{t('production')}</Typography>
         <Grid container spacing={3} mt={2}>
           {filteredProduction.map((instance, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -90,8 +112,8 @@ export default function ProductPortal() {
                   <Typography variant="h6">{instance.name}</Typography>
                   <Typography variant="body2" color="text.secondary">{instance.description}</Typography>
                   <Box mt={2}>
-                    <Button variant="contained" color="primary" href={instance.url}>{t('visit')}</Button>
-                    <Button variant="outlined" color="secondary" href={instance.github} sx={{ ml: 2 }}>{t('github')}</Button>
+                    <Button variant="contained" color="primary" href={instance.url} target="_blank">{t('visit')}</Button>
+                    <Button variant="outlined" color="secondary" href={instance.github} target="_blank" sx={{ ml: 2 }}>{t('github')}</Button>
                   </Box>
                 </CardContent>
               </Card>
@@ -99,7 +121,7 @@ export default function ProductPortal() {
           ))}
         </Grid>
 
-        <Typography textAlign="center" variant="h5" color={darkMode ? "white" : "black"} mt={4} id="testing">{t('testing')}</Typography>
+        <Typography variant="h5" fontWeight="bold" color={darkMode ? "white" : "black"} mt={4} id="testing" textAlign="center">{t('testing')}</Typography>
         <Grid container spacing={3} mt={2}>
           {filteredTesting.map((instance, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -110,8 +132,8 @@ export default function ProductPortal() {
                   <Typography variant="body2">{t('username')}: <strong>{instance.username}</strong></Typography>
                   <Typography variant="body2">{t('password')}: <strong>{instance.password}</strong></Typography>
                   <Box mt={2}>
-                    <Button variant="contained" color="primary" href={instance.url}>{t('visit')}</Button>
-                    <Button variant="outlined" color="secondary" href={instance.github} sx={{ ml: 2 }}>{t('github')}</Button>
+                    <Button variant="contained" color="primary" href={instance.url} target="_blank">{t('visit')}</Button>
+                    <Button variant="outlined" color="secondary" href={instance.github} target="_blank" sx={{ ml: 2 }}>{t('github')}</Button>
                   </Box>
                 </CardContent>
               </Card>
@@ -119,7 +141,7 @@ export default function ProductPortal() {
           ))}
         </Grid>
 
-        <Typography textAlign="center" variant="h5" color={darkMode ? "white" : "black"} mt={4} id="training">
+        <Typography variant="h5" fontWeight="bold" color={darkMode ? "white" : "black"} mt={4} id="training" textAlign="center">
           {t('training')}
         </Typography>
         <Tabs value={selectedTab} onChange={handleTabChange} centered>
@@ -142,14 +164,27 @@ export default function ProductPortal() {
                 <TableRow key={index}>
                   <TableCell>{material.product}</TableCell>
                   <TableCell>{material.description}</TableCell>
-                  <TableCell><Button variant="outlined">{material.jobAid}</Button></TableCell>
-                  <TableCell><Button variant="contained" color="primary">{material.video}</Button></TableCell>
+                  <TableCell>
+                    <Button variant="outlined" href={material.jobAid.url} target="_blank">
+                      {material.jobAid.label}
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="contained" color="primary" href={material.video.url} target="_blank">
+                      {material.video.label}
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Container>
+
+      <Box sx={{ backgroundColor: darkMode ? "#424242" : "#1976d2", color: "white", padding: 2, textAlign: "center", marginTop: 4 }}>
+        <Typography variant="body2">© 2025 Brought to you by HIS.</Typography>
+        <Link href="#" color="inherit" underline="none" sx={{ mx: 2 }}>Contact Us</Link>
+      </Box>
     </Box>
   );
 }
