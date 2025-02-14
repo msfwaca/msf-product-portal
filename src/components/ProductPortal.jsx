@@ -64,6 +64,9 @@ export default function ProductPortal() {
     <Box sx={{ backgroundColor: darkMode ? "#303030" : "#f5f5f5", minHeight: "100vh", padding: 4 }}>
       <AppBar position="static" sx={{ backgroundColor: darkMode ? "#424242" : "#1976d2" }}>
         <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="logo" sx={{ mr: 0 }}>
+            <img src="https://waca.msf.org/wp-content/uploads/2023/11/logomsfwaca1.png" alt="Logo" style={{ height: 40 }} />
+          </IconButton>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>{t('title')}</Typography>
           <Link href="#production" color="inherit" underline="none" sx={{ mx: 2 }}>{t('production')}</Link>
           <Link href="#testing" color="inherit" underline="none" sx={{ mx: 2 }}>{t('testing')}</Link>
